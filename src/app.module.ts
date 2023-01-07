@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { PlantSchema, Plant, PlantDocument } from 'src/schema/plant.schema';
 import * as dotenv from 'dotenv';
 
 // get connection string from env file
@@ -17,7 +18,7 @@ console.log(process.env.MONGOCONN);
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGOCONN), // connect to mongoDB
   ],
-  controllers: [PlantController, AppController],
-  providers: [PlantService, AppService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
