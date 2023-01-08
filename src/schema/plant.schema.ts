@@ -1,11 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 // define mongodb data schema
 @Schema()
 export class Plant {
-  @Prop({ type: String, required: true })
-  id: string;
+  @Prop({ required: true })
+  _id: ObjectId;
 
   @Prop({ required: true })
   name: string;

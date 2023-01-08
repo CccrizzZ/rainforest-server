@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ObjectId } from 'mongodb';
 
 export default class CreatePlantDto {
   @ApiProperty({ required: true })
-  id: string;
+  _id: ObjectId;
 
   @ApiProperty({ required: true })
   name: string;

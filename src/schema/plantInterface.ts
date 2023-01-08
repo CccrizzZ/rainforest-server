@@ -1,5 +1,7 @@
+import { ObjectId } from 'mongodb';
+
 export default interface Plant {
-  id: string;
+  _id: ObjectId;
   name: string;
   dominant: string;
   seedType: string;

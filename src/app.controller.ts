@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards, Post, Request } from '@nestjs/common';
 import { AppService } from './app.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
 export class AppController {
@@ -7,8 +8,10 @@ export class AppController {
     console.log('AppController Created');
   }
 
-  @Get()
-  connectToMongoDB(): string {
-    return this.appService.connectToMongoDB();
+  // login authentication
+  @UseGuards(AuthGuard('local'))
+  @Post('auth/login')
+  async login(@Request() req) {
+    return req.user;
   }
 }
