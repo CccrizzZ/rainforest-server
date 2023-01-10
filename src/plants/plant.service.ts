@@ -2,7 +2,7 @@ import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Plant, PlantDocument } from 'src/schema/plant.schema';
 import { Model } from 'mongoose';
-import CreatePlantDto from 'src/schema/plant.dto';
+import PlantDto from 'src/schema/plant.dto';
 
 // const examplePlantsData: Plant[] = [
 //   {
@@ -55,27 +55,31 @@ export class PlantService {
   }
 
   // get single plant by id
-  getSinglePlant(id: string): Promise<Plant> {
-    console.log('get plant by id');
-    return this.plantModel.findById(id).exec();
+  async getSinglePlant(id: string): Promise<Plant> {
+    console.log(`get plant ${id} by id`);
+    return await this.plantModel.findById(id).exec();
   }
 
   // delete plant by id
-  deletePlant(id: string): void {
+  async deletePlant(id: string): Promise<boolean> {
     console.log(`deleting plant: ${id}`);
-    this.plantModel.find({ id: id }).remove().exec();
+    const remove = await this.plantModel.find({ _id: id }).remove().exec();
+    if (remove) {
+      return true;
+    }
   }
 
   // create a new plant
-  create(createPlantDto: CreatePlantDto): Promise<Plant> {
-    console.log(`create new plant: ${createPlantDto}`);
-    const newPlant = new this.plantModel(createPlantDto);
-    return newPlant.save();
+  async create(plantDto: PlantDto): Promise<Plant> {
+    console.log(`create new plant: ${plantDto}`);
+    const newPlant = new this.plantModel(plantDto);
+    return await newPlant.save();
   }
 
-  updatePlant(createPlantDto: CreatePlantDto): Promise<Plant> {
+  async updatePlant(targetID: string, plantDto: PlantDto): Promise<Plant> {
     console.log('update plant');
-    const newPlant = new this.plantModel(createPlantDto);
-    return newPlant.save();
+    return this.plantModel.findByIdAndUpdate(targetID, plantDto, {
+      new: true,
+    });
   }
 }

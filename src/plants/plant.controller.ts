@@ -8,10 +8,10 @@ import {
   Body,
 } from '@nestjs/common';
 import { PlantService } from './plant.service';
-import CreatePlantDto from 'src/schema/plant.dto';
+import PlantDto from 'src/schema/plant.dto';
 import { Plant } from '../schema/plant.schema';
 
-// const examplePlant: CreatePlantDto = {
+// const examplePlant: PlantDto = {
 //   name: 'example plant',
 //   dominant: 'sativa',
 //   seedType: 'auto',
@@ -30,32 +30,33 @@ export class PlantController {
   @Get('all')
   async getAllPlants(): Promise<Plant[]> {
     const result = await this.plantService.getAllPlants();
-    console.log(result);
     return result;
   }
 
   @Get(':id')
-  async getSinglePlant(@Param() params: { id: string }): Promise<Plant> {
-    const result = await this.plantService.getSinglePlant(params.id);
+  async getSinglePlant(@Param('id') id: string): Promise<Plant> {
+    const result = await this.plantService.getSinglePlant(id);
     return result;
   }
 
   @Delete(':id')
-  async deletePlant(@Param('id') id: string) {
-    return `This action removes #${id} plant`;
+  async deletePlant(@Param('id') id: string): Promise<boolean> {
+    const result = await this.plantService.deletePlant(id);
+    console.log(`removes #${id} plant`);
+    return result;
   }
 
   @Post('create')
-  async createPlant(@Body() createPlantDto: CreatePlantDto): Promise<void> {
-    // need to be fixed
-    this.plantService.create(createPlantDto);
+  async createPlant(@Body() plantDto: PlantDto): Promise<void> {
+    this.plantService.create(plantDto); // body will be a json object
   }
 
-  @Put('update')
+  @Put(':id')
   async updatePlant(
-    @Param() id: string,
-    @Body() createPlantDto: CreatePlantDto,
-  ): Promise<void> {
-    this.plantService.updatePlant(createPlantDto);
+    @Param('id') id: string,
+    @Body() plantDto: PlantDto,
+  ): Promise<Plant> {
+    console.log(`updating plant ${id} to plant ${plantDto.name}`);
+    return await this.plantService.updatePlant(id, plantDto);
   }
 }
