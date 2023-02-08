@@ -7,28 +7,29 @@ export class UsersService {
     {
       id: 1,
       userName: 'chris',
-      passWord: '2',
+      passWord: '2222',
       email: 'chris@example.com',
     },
     {
       id: 2,
       userName: 'Owen',
-      passWord: '1',
+      passWord: '1111',
       email: 'owen@example.com',
     },
   ];
 
+  // need mongo db implementation
   // finding a single user by id
   async findById(id: number): Promise<User | undefined> {
     return this.users.find((user) => {
-      user.id === id;
+      return user.id === id;
     });
   }
 
   // finding a single user by email
   async findByEmail(email: string): Promise<User | undefined> {
     return this.users.find((user) => {
-      user.email === email;
+      return user.email === email;
     });
   }
 

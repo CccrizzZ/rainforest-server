@@ -12,16 +12,13 @@ export class AuthService {
   constructor(private usersService: UsersService) {}
 
   async refresh(refreshStr: string): Promise<string | undefined> {
+    // if refreshToken dont exist in array return undefined
     const refreshToken = await this.retrieveRefreshToken(refreshStr);
-    if (!refreshToken) {
-      return undefined;
-    }
+    if (!refreshToken) return undefined;
 
-    // validate user
+    // validate user, return undefined if not found
     const user = await this.usersService.findById(refreshToken.id);
-    if (!user) {
-      return undefined;
-    }
+    if (!user) return undefined;
 
     // pass validation and return refresh str
     const accessToken = {
@@ -37,9 +34,7 @@ export class AuthService {
   ): Promise<RefreshToken | undefined> {
     try {
       const decoded = verify(refreshStr, process.env.REFRESH_SECRET);
-      if (typeof (decoded === 'string')) {
-        return undefined;
-      }
+      if (typeof (decoded === 'string')) return undefined;
       return Promise.resolve(
         this.refreshTokens.find(
           (token: RefreshToken) => token.id === decoded.id,
@@ -56,13 +51,12 @@ export class AuthService {
     password: string,
     values: { userAgent: string; ipAddress: string },
   ): Promise<{ accessToken: string; refreshToken: string } | undefined> {
+    // query user from db, return undefined if not found
     const user = await this.usersService.findByEmail(email);
     if (!user) return undefined;
 
     // verify user, use argon2 for password hashing
-    if (user.passWord !== password) {
-      return undefined;
-    }
+    if (user.passWord !== password) return undefined;
 
     // login success return the token
     return this.newRefreshAccessToken(user, values);
@@ -100,15 +94,16 @@ export class AuthService {
     };
   }
 
-  async logout(refreshStr): Promise<void> {
+  // logout user
+  async logout(refreshStr: string): Promise<void> {
+    // if refresh token does not exist, return undefined
     const refreshToken = await this.retrieveRefreshToken(refreshStr);
-    if (!refreshToken) {
-      return;
-    }
+    if (!refreshToken) return;
 
+    console.log('loggingout');
     // delete refreshtoken from db
     this.refreshTokens = this.refreshTokens.filter(
-      (refreshToken) => refreshToken.id !== refreshToken.id,
+      (token) => token.id !== refreshToken.id,
     );
   }
 }
