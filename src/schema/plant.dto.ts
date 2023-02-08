@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, MaxLength, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
 export default class PlantDto {
   @ApiProperty({ required: true })
@@ -13,38 +13,35 @@ export default class PlantDto {
   @IsNotEmpty()
   name: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty()
   @IsString()
-  @IsNotEmpty()
   dominant: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty()
   @IsString()
-  @IsNotEmpty()
   seedType: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty()
   @IsNumber()
-  @IsNotEmpty()
   amount: number;
 
-  @ApiProperty({ required: true })
+  @ApiProperty()
   @IsNumber()
-  @IsNotEmpty()
   thc: number;
 
-  @ApiProperty({ required: true })
+  @ApiProperty()
   @IsNumber()
-  @IsNotEmpty()
   cbd: number;
 
-  @ApiProperty({ required: true })
+  @ApiProperty()
   @IsString()
-  @IsNotEmpty()
   plantDate: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty()
   @IsString()
-  @IsNotEmpty()
   stage: string;
+
+  @ApiProperty()
+  @IsString()
+  growingMedia: string;
 }

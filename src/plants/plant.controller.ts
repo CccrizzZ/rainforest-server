@@ -11,18 +11,7 @@ import { PlantService } from './plant.service';
 import PlantDto from 'src/schema/plant.dto';
 import { Plant } from '../schema/plant.schema';
 
-// const examplePlant: PlantDto = {
-//   name: 'example plant',
-//   dominant: 'sativa',
-//   seedType: 'auto',
-//   amount: 1,
-//   thc: 24,
-//   cbd: 2,
-//   plantDate: 'today',
-//   stage: 'germination',
-// };
-
-// controller for all plants data mongoDB operation
+// controller for plants data mongoDB operation
 @Controller('plants')
 export class PlantController {
   constructor(private readonly plantService: PlantService) {}

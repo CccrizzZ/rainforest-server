@@ -4,42 +4,6 @@ import { Plant, PlantDocument } from 'src/schema/plant.schema';
 import { Model } from 'mongoose';
 import PlantDto from 'src/schema/plant.dto';
 
-// const examplePlantsData: Plant[] = [
-//   {
-//     id: '1',
-//     name: 'orange',
-//     dominant: 'indica',
-//     seedType: 'autoflower',
-//     amount: 1,
-//     thc: 20,
-//     cbd: 1,
-//     plantDate: 'today',
-//     stage: 'vegetation',
-//   },
-//   {
-//     id: '2',
-//     name: 'banana',
-//     dominant: 'indica',
-//     seedType: 'autoflower',
-//     amount: 1,
-//     thc: 20,
-//     cbd: 1,
-//     plantDate: 'today',
-//     stage: 'vegetation',
-//   },
-//   {
-//     id: '3',
-//     name: 'grape',
-//     dominant: 'indica',
-//     seedType: 'autoflower',
-//     amount: 1,
-//     thc: 20,
-//     cbd: 1,
-//     plantDate: 'today',
-//     stage: 'vegetation',
-//   },
-// ];
-
 @Injectable()
 export class PlantService {
   constructor(
@@ -76,6 +40,7 @@ export class PlantService {
     return await newPlant.save();
   }
 
+  // update plant by id
   async updatePlant(targetID: string, plantDto: PlantDto): Promise<Plant> {
     console.log('update plant');
     return this.plantModel.findByIdAndUpdate(targetID, plantDto, {

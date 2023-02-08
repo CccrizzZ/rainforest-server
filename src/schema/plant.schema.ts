@@ -11,26 +11,29 @@ export class Plant {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
+  @Prop()
   dominant: string;
 
-  @Prop({ required: true })
+  @Prop()
   seedType: string;
 
-  @Prop({ required: true })
+  @Prop()
   amount: number;
 
-  @Prop({ required: true })
+  @Prop()
   thc: number;
 
-  @Prop({ required: true })
+  @Prop()
   cbd: number;
 
-  @Prop({ required: true })
+  @Prop()
   plantDate: string;
 
-  @Prop({ required: true })
+  @Prop()
   stage: string;
+
+  @Prop()
+  growingMedia: string;
 }
 
 // export document

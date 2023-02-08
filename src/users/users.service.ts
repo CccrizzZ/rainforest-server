@@ -1,25 +1,40 @@
 import { Injectable } from '@nestjs/common';
-export interface User {
-  userId: number;
-  userName: string;
-  passWord: string;
-}
+import User from './entities/users.entity';
 
 @Injectable()
 export class UsersService {
-  // need to implement salted password
-  // sha 256 or bcrypt
   private readonly users: User[] = [
     {
-      userId: 1,
+      id: 1,
       userName: 'chris',
       passWord: '2',
+      email: 'chris@example.com',
+    },
+    {
+      id: 2,
+      userName: 'Owen',
+      passWord: '1',
+      email: 'owen@example.com',
     },
   ];
 
-  async findUser(userName: string): Promise<User | undefined> {
+  // finding a single user by id
+  async findById(id: number): Promise<User | undefined> {
     return this.users.find((user) => {
-      user.userName === userName;
+      user.id === id;
     });
   }
+
+  // finding a single user by email
+  async findByEmail(email: string): Promise<User | undefined> {
+    return this.users.find((user) => {
+      user.email === email;
+    });
+  }
+
+  // create user
+
+  // delete user
+
+  // edit user
 }
